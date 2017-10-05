@@ -13,8 +13,13 @@
 #
 FROM jboss/keycloak:latest
 
-MAINTAINER Stock Software
+MAINTAINER PF
 
+USER root
+RUN chown 1000:1000 /opt/jboss/
+COPY fix-permissions /opt/jboss/
+RUN /opt/jboss/fix-permissions /opt/jboss/
+USER 1000
 ADD changeDatabase.xsl /opt/jboss/keycloak/
 RUN mkdir -p /opt/jboss/keycloak/modules/system/layers/base/net/sourceforge/jtds/main; cd /opt/jboss/keycloak/modules/system/layers/base/net/sourceforge/jtds/main; curl -O http://central.maven.org/maven2/net/sourceforge/jtds/jtds/1.3.1/jtds-1.3.1.jar
 ADD module.xml /opt/jboss/keycloak/modules/system/layers/base/net/sourceforge/jtds/main/
