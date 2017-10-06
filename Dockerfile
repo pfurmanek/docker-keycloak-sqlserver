@@ -17,7 +17,7 @@ MAINTAINER PF
 
 USER root
 RUN chown 1000:1000 /opt/jboss/
-COPY fix-permissions /opt/jboss/
+ADD fix-permissions /opt/jboss/
 USER 1000
 RUN /opt/jboss/fix-permissions /opt/jboss/
 
